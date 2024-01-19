@@ -25,13 +25,10 @@ namespace _02_DbContext.Controllers
             if (id == null) return BadRequest();
 
             Advertisement? advertisement = await context.Advertisements.FirstOrDefaultAsync(adv => adv.Id == id);
-            if (advertisement != null)
-            {
-                context.Advertisements.Remove(advertisement);
-                await context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return NotFound();
+            if (advertisement != null) return NotFound();
+            context.Advertisements.Remove(advertisement);
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> Details(int? id)
         {
@@ -39,10 +36,8 @@ namespace _02_DbContext.Controllers
 
             Advertisement? advertisement = await context.Advertisements.FirstOrDefaultAsync(adv => adv.Id == id);
             if (advertisement != null)
-            {
-                return View(advertisement);
-            }
-            return NotFound();
+                return NotFound();
+            return View(advertisement);
         }
     }
 }
